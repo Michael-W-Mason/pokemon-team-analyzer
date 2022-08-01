@@ -1,52 +1,11 @@
 import React, { SyntheticEvent, useState } from 'react';
+import types from './data/pokemon';
+import { defaultTeam } from './defaults/pokemon_default';
+import Moves from './components/Moves';
 
-interface Move {
-  type: string;
-  power: number;
-  stat: string;
-}
 
-interface Pokemon {
-  name: string;
-  type1: string;
-  type2: string;
-  moves: Move[];
-}
 
 function App() {
-  const defaultMove: Move = {
-    type: '',
-    power: 0,
-    stat: '',
-  }
-  const defaultPokemon: Pokemon = {
-    name: '',
-    type1: '',
-    type2: '',
-    moves: [defaultMove, defaultMove, defaultMove, defaultMove],
-  }
-  const defaultTeam: Pokemon[] = Array(6).fill(defaultPokemon);
-  const types: string[] = [
-    'Normal',
-    'Fire',
-    'Water',
-    'Grass',
-    'Electric',
-    'Ice',
-    'Fighting',
-    'Poison',
-    'Ground',
-    'Flying',
-    'Psychic',
-    'Bug',
-    'Rock',
-    'Ghost',
-    'Dark',
-    'Dragon',
-    'Steel',
-    'Fairy',
-  ];
-
   function changeHandler() {
 
   }
@@ -56,6 +15,8 @@ function App() {
   }
 
   const [userTeam, setUserTeam] = useState(defaultTeam);
+
+
   return (
     <div className='App'>
       <form className='container mx-auto grid grid-cols-2 grid-rows-3 justify-center items-center'>
@@ -103,34 +64,7 @@ function App() {
                     {
                       pokemon.moves.map((move, index) => {
                         return (
-                          <div key={index} className='grid grid-cols-2'>
-                            <div className='flex flex-row'>
-                              <div>
-                                <label htmlFor="move_power">Power:</label>
-                                <input type="number" value={move.power} name='move_power' />
-                              </div>
-                              <div>
-                                <label htmlFor="move_type">Type:</label>
-                                <select className='border-2' name='move_type'>
-                                  <option defaultValue='' hidden></option>
-                                  {
-                                    types.map((type, index) => {
-                                      return (
-                                        <option key={index} value={type}>{type}</option>
-                                      )
-                                    })
-                                  }
-                                </select>
-                              </div>
-                              <div>
-                                <label htmlFor="move_stat">Attack / Sp. Attack</label>
-                                <select name="move_stat">
-                                  <option value="Atk">Attack</option>
-                                  <option value="spAtk">Special Attack</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
+                          <Moves key={index} move={move} />
                         );
                       })
                     }
